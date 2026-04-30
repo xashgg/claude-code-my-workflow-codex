@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Changelog](https://img.shields.io/badge/See-CHANGELOG-blue.svg)](CHANGELOG.md)
 
-A ready-to-fork Codex workflow for academic work: lecture slides, Quarto mirrors, research papers, R analysis, replication checks, and structured review. The reusable instructions now live in `AGENTS.md` and `.codex/`.
+This repo is a Codexized version of Prof. Pedro Sant'Anna's [Claude Code workflow](https://github.com/pedrohcgs/claude-code-my-workflow). A ready-to-fork Codex workflow for academic work: lecture slides, Quarto mirrors, research papers, R analysis, replication checks, and structured review. The reusable instructions now live in `AGENTS.md` and `.codex/`.
 
 ## Quick Start
 
