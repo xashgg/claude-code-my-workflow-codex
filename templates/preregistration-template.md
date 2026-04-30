@@ -1,20 +1,20 @@
-# Preregistration Template
+﻿# Preregistration Template
 
-This template is consumed by `.claude/skills/preregister/SKILL.md`. It contains three style sections (OSF, AsPredicted, AEA RCT Registry). The skill picks one based on `--style` or the field default.
+This template is consumed by `.codex/skills/preregister/SKILL.md`. It contains three style sections (OSF, AsPredicted, AEA RCT Registry). The skill picks one based on `--style` or the field default.
 
 **Output convention.** The skill writes the chosen style's filled-in form to `quality_reports/preregistrations/YYYY-MM-DD_<slug>.md` (gitignored). The user uploads it to the registry; this template is *not* a registry submission tool.
 
 **Annotation legend.** Each field is tagged with one of:
 
-- **MUST** — registry-required; the document cannot be submitted without it.
-- **SHOULD** — strongly recommended; reviewers expect it.
-- **MAY** — optional; include if relevant.
+- **MUST** 鈥?registry-required; the document cannot be submitted without it.
+- **SHOULD** 鈥?strongly recommended; reviewers expect it.
+- **MAY** 鈥?optional; include if relevant.
 
 For any **MUST** field that the input description doesn't supply, write `[CLARIFY: <specific question>]`. Do not fabricate.
 
 ---
 
-## Style 1 — OSF (Open Science Framework)
+## Style 1 鈥?OSF (Open Science Framework)
 
 The OSF "Preregistration" template. Default for political-science, psychology, and broad social-science studies. Upload at `osf.io/registries`.
 
@@ -28,7 +28,7 @@ style: osf
 source-spec: <path to quality_reports/specs/... if applicable>
 ---
 
-# Preregistration — <Study title>
+# Preregistration 鈥?<Study title>
 
 ## 1. Study Information (MUST)
 
@@ -39,11 +39,11 @@ source-spec: <path to quality_reports/specs/... if applicable>
 <List with affiliations>
 
 ### 1.3 Description
-<2–4 sentence study summary: what, why, who, when>
+<2鈥? sentence study summary: what, why, who, when>
 
-### 1.4 Hypotheses (MUST — directional)
+### 1.4 Hypotheses (MUST 鈥?directional)
 **H1.** <Directional claim, e.g., "Treatment T increases outcome Y compared to control C">.
-**H2.** <…>
+**H2.** <鈥?
 
 ## 2. Design (MUST)
 - **Type:** experimental / quasi-experimental / observational
@@ -74,7 +74,7 @@ source-spec: <path to quality_reports/specs/... if applicable>
 - **What would make us reject H1:** <quantitative threshold>
 - **Equivalence test (if used):** <bounds>
 
-## 7. Data Exclusions (MUST — ex ante)
+## 7. Data Exclusions (MUST 鈥?ex ante)
 - **Outliers:** <e.g., "exclude observations with completion time < 60 seconds">
 - **Failed manipulation checks:** <rule>
 - **Other:** <rule>
@@ -96,7 +96,7 @@ source-spec: <path to quality_reports/specs/... if applicable>
 
 ---
 
-## Style 2 — AsPredicted
+## Style 2 鈥?AsPredicted
 
 The 9-question AsPredicted form (aspredicted.org). Designed for lab psych and short experimental studies. Upload at `aspredicted.org/create.php`.
 
@@ -108,12 +108,12 @@ style: aspredicted
 source-spec: <path>
 ---
 
-# AsPredicted — <Study title>
+# AsPredicted 鈥?<Study title>
 
 ## 1. Have any data been collected for this study yet? (MUST)
-<Yes — describe pilot status / No>
+<Yes 鈥?describe pilot status / No>
 
-## 2. What's the main question being asked or hypothesis being tested? (MUST — directional)
+## 2. What's the main question being asked or hypothesis being tested? (MUST 鈥?directional)
 <H1: directional claim>
 
 ## 3. Describe the key dependent variable(s) specifying how they will be measured. (MUST)
@@ -140,7 +140,7 @@ source-spec: <path>
 
 ---
 
-## Style 3 — AEA RCT Registry
+## Style 3 鈥?AEA RCT Registry
 
 The American Economic Association RCT Registry (socialscienceregistry.org). **Required** for AEA-journal submission of any randomised intervention since 2018. Upload at `socialscienceregistry.org/trials/create`.
 
@@ -153,7 +153,7 @@ style: aea-rct
 source-spec: <path>
 ---
 
-# AEA RCT Registry — <Trial title>
+# AEA RCT Registry 鈥?<Trial title>
 
 ## Trial Information (MUST)
 - **Status:** Not yet on the air / In development / On going / Completed
@@ -168,9 +168,9 @@ source-spec: <path>
 
 ## Primary Outcomes (MUST)
 - **Y1 (primary):** <name, measurement, time of measurement>
-- **Y2 (secondary, optional):** <…>
+- **Y2 (secondary, optional):** <鈥?
 
-## Primary Hypotheses (MUST — directional)
+## Primary Hypotheses (MUST 鈥?directional)
 **H1.** <Directional claim about Y1 under T vs C>
 
 ## Sample (MUST)
@@ -183,9 +183,9 @@ source-spec: <path>
 ## Power Calculation (SHOULD)
 - **Assumed effect size:** <SD units>
 - **Alpha / power:** <0.05 / 0.80>
-- **Resulting N (and ICC if clustered):** <…>
+- **Resulting N (and ICC if clustered):** <鈥?
 
-## Pre-Analysis Plan (MAY — attach as PDF)
+## Pre-Analysis Plan (MAY 鈥?attach as PDF)
 - **Estimator:** <ANCOVA / DiD / cluster-robust OLS>
 - **Specifications:** numbered, with controls listed
 - **Multiple testing:** <correction or family-wise rule>
@@ -199,7 +199,7 @@ source-spec: <path>
 
 ## Data Sharing (SHOULD)
 - **Public data plan:** <yes / no / restricted>
-- **Replication code:** <will be deposited at JEL data archive — see AEA Data and Code Availability Policy>
+- **Replication code:** <will be deposited at JEL data archive 鈥?see AEA Data and Code Availability Policy>
 
 ## Conflicts of Interest (MUST)
 <Disclosure>
@@ -224,13 +224,13 @@ For users who need to publish under one registry but report results under anothe
 | 7 Data Exclusions | Q6 | (in PAP attachment) |
 | 6 Inference Criteria | (implicit in Q5) | (in PAP attachment) |
 
-The mapping is approximate — registries differ in granularity. When in doubt, use the registry's native template directly.
+The mapping is approximate 鈥?registries differ in granularity. When in doubt, use the registry's native template directly.
 
 ---
 
 ## Where this template lives
 
 - **File:** `templates/preregistration-template.md`
-- **Consumed by:** `.claude/skills/preregister/SKILL.md`
+- **Consumed by:** `.codex/skills/preregister/SKILL.md`
 - **Output:** `quality_reports/preregistrations/YYYY-MM-DD_<slug>.md` (gitignored)
 - **Registry URLs:** OSF (osf.io/registries), AsPredicted (aspredicted.org), AEA RCT (socialscienceregistry.org)

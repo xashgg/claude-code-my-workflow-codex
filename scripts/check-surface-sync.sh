@@ -1,16 +1,16 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 # Runs two pre-commit gates:
-#   1. check-surface-sync.py — count assertions (skills/agents/rules/hooks)
-#      agree across README, CLAUDE.md, guide source + rendered HTML,
+#   1. check-surface-sync.py 鈥?count assertions (skills/agents/rules/hooks)
+#      agree across README, AGENTS.md, guide source + rendered HTML,
 #      landing page, skill template.
 #      Exit codes: 0 = clean, 1 = drift, 2 = internal error.
-#   2. check-skill-integrity.py — frontmatter/body parity, argument-hint
+#   2. check-skill-integrity.py 鈥?frontmatter/body parity, argument-hint
 #      flag parity (bidirectional), internal anchor resolution, rule-skill
 #      keyword parity.
 #      Exit codes: 0 = clean OR only P2 advisories, 1 = P0/P1 findings,
 #      2 = internal script error.
 #
-# Both tools run to completion even if the other fails — the user sees
+# Both tools run to completion even if the other fails 鈥?the user sees
 # the full picture on a single invocation. The wrapper's final exit code
 # is the max of the two (any failure propagates).
 #
@@ -26,12 +26,12 @@ if [ -z "$SCRIPT_DIR" ] || [ ! -d "$SCRIPT_DIR" ]; then
     exit 2
 fi
 
-echo "── check-surface-sync ──"
+echo "鈹€鈹€ check-surface-sync 鈹€鈹€"
 python3 "$SCRIPT_DIR/check-surface-sync.py" "$@"
 SYNC_RC=$?
 
 echo ""
-echo "── check-skill-integrity ──"
+echo "鈹€鈹€ check-skill-integrity 鈹€鈹€"
 python3 "$SCRIPT_DIR/check-skill-integrity.py" "$@"
 INTEGRITY_RC=$?
 

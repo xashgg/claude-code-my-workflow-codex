@@ -1,5 +1,5 @@
-# ==============================================================================
-# .gitignore for Academic Claude Code Projects
+﻿# ==============================================================================
+# .gitignore for Academic Codex Projects
 # ==============================================================================
 
 # LaTeX build artifacts
@@ -18,9 +18,6 @@
 *.run.xml
 *-blx.bib
 
-# Compiled PDFs (uncomment to track specific PDFs)
-# *.pdf
-
 # Python
 __pycache__/
 *.pyc
@@ -36,15 +33,11 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Claude Code local files (not shared across machines)
-.claude/settings.local.json
-.claude/state/
-CLAUDE.local.md
+# Codex local files
+.codex/state/
+AGENTS.local.md
 
 # IDE
-# .vscode/settings.json ships in the template (carries shipped Claude Code permission-mode
-# recommendations — see TROUBLESHOOTING.md "Permissions / bypass / statusline" for the typo
-# fix forkers need). Other .vscode/ content is developer-machine-specific.
 .vscode/*
 !.vscode/settings.json
 .idea/
@@ -55,9 +48,7 @@ CLAUDE.local.md
 # Quarto rendering artifacts
 .quarto/
 
-# quality_reports/ — per-project session logs, plans, specs, merges.
-# The directory structure ships in the template (via .gitkeep), but the
-# content is PROJECT-INTERNAL and shouldn't be inherited by forks.
+# Per-project reports
 quality_reports/plans/*
 quality_reports/specs/*
 quality_reports/session_logs/*
@@ -73,9 +64,5 @@ quality_reports/preregistrations/*
 !quality_reports/checkpoints/.gitkeep
 !quality_reports/preregistrations/.gitkeep
 
-# R analysis outputs (generated artifacts; keep scripts, ignore outputs)
+# R analysis outputs
 scripts/R/_outputs/
-
-# Output artifacts — uncomment lines below based on your preference
-# *.rds
-# output/**/*.rds

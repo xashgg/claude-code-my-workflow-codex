@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Quality Scoring System for Academic Course Materials
 
@@ -22,7 +22,7 @@ import re
 import json
 
 # ==============================================================================
-# SCORING RUBRIC (from .claude/rules/quality-gates.md)
+# SCORING RUBRIC (from .codex/rules/quality-gates.md)
 # ==============================================================================
 
 QUARTO_RUBRIC = {

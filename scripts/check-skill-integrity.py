@@ -1,19 +1,19 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
-check-skill-integrity — deterministic parity checks the audit agents keep
+check-skill-integrity 鈥?deterministic parity checks the audit agents keep
 missing. Runs in under a second, catches classes of bug that Copilot /
 Codex have historically caught but `/deep-audit` has not.
 
 Checks:
-  1. Frontmatter ↔ body tool parity — allowed-tools in SKILL.md frontmatter
+  1. Frontmatter 鈫?body tool parity 鈥?allowed-tools in SKILL.md frontmatter
      must cover every tool the body actually invokes.
-  2. argument-hint ↔ body flag parity — flags documented in the body
+  2. argument-hint 鈫?body flag parity 鈥?flags documented in the body
      (e.g. `--no-verify`) must appear in argument-hint, AND flags in
      argument-hint must be documented somewhere in the body. Both
      directions: stale hint flags mislead users as much as missing ones.
-  3. Internal markdown anchor resolution — every `[text](path#anchor)`
+  3. Internal markdown anchor resolution 鈥?every `[text](path#anchor)`
      link must resolve to an actual heading in the target file.
-  4. Rule paths/globs ↔ skill implementation parity — if a rule lists a
+  4. Rule paths/globs 鈫?skill implementation parity 鈥?if a rule lists a
      skill in its `paths:` or `globs:` frontmatter, that skill must
      reference the rule's protocol keywords in its body.
 
@@ -28,7 +28,7 @@ Usage:
   python3 scripts/check-skill-integrity.py [--verbose]
 
 Fail-open on parser errors: a corrupt/unparseable file prints a P2
-warning but does not fail the build. Motivated by PRs #87, #88–#90,
+warning but does not fail the build. Motivated by PRs #87, #88鈥?90,
 and #92 where bots caught parity drift the audit agents missed.
 """
 
@@ -50,11 +50,11 @@ TOOLS = {
 
 # ---- Frontmatter parse -------------------------------------------------------
 
-FM_RE = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
+FM_RE = re.compile(r"\A\ufeff?---\r?\n(.*?)\r?\n---\r?\n", re.DOTALL)
 
 
 def parse_frontmatter(text: str) -> tuple[dict, str]:
-    """Return (frontmatter_dict, body). Minimal YAML — we don't need full
+    """Return (frontmatter_dict, body). Minimal YAML 鈥?we don't need full
     YAML, just `allowed-tools: [...]`, `argument-hint: "..."`, `paths:`."""
     m = FM_RE.match(text)
     if not m:
@@ -68,7 +68,7 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
             continue
         if ":" not in line:
             continue
-        if line[0] in " \t":  # list continuation — ignore here, handled below
+        if line[0] in " \t":  # list continuation 鈥?ignore here, handled below
             continue
         key, _, value = line.partition(":")
         key = key.strip()
@@ -111,11 +111,11 @@ def _parse_block_list(fm_raw: str, key: str) -> list[str]:
     return items
 
 
-# ---- Check 1: Frontmatter ↔ body tool parity --------------------------------
+# ---- Check 1: Frontmatter 鈫?body tool parity --------------------------------
 
 TOOL_INVOCATION_PATTERNS = {
     # The primary check. Task is the most common missing-permission bug
-    # (see PR #92 — 4 skills each promised to spawn claim-verifier via Task
+    # (see PR #92 鈥?4 skills each promised to spawn claim-verifier via Task
     # but forgot to declare Task in allowed-tools).
     "Task": [
         r"\bvia\s+`?Task`?\b",
@@ -126,7 +126,7 @@ TOOL_INVOCATION_PATTERNS = {
         r"\bTask\s+tool\b",
     ],
     # Edit/Write/MultiEdit require explicit "use X tool" or imperative
-    # language — prose like "edit the file" shouldn't match.
+    # language 鈥?prose like "edit the file" shouldn't match.
     "Edit": [r"`Edit`\s+tool\b", r"\bEdit\s+tool\b"],
     "Write": [r"`Write`\s+tool\b", r"\bWrite\s+tool\b"],
     "MultiEdit": [r"`MultiEdit`\s+tool\b"],
@@ -137,7 +137,7 @@ TOOL_INVOCATION_PATTERNS = {
     # of false positives on these tools exceeds the benefit. If a real
     # WebSearch-permission bug slips through, Copilot/Codex catch it.
     #
-    # Read/Grep/Glob/Bash similarly omitted — too many false positives
+    # Read/Grep/Glob/Bash similarly omitted 鈥?too many false positives
     # from prose ("read the file", "run the script") and from bash code
     # fences that illustrate for the user rather than invoke the Bash tool.
 }
@@ -157,7 +157,7 @@ def tools_invoked_in_body(body: str) -> set[str]:
 def check_tool_parity() -> list[tuple[str, str, str]]:
     """Return list of (severity, file, msg)."""
     findings: list[tuple[str, str, str]] = []
-    for skill_md in sorted(REPO.glob(".claude/skills/*/SKILL.md")):
+    for skill_md in sorted(REPO.glob(".codex/skills/*/SKILL.md")):
         try:
             text = skill_md.read_text(encoding="utf-8")
         except (OSError, UnicodeError) as e:
@@ -181,7 +181,7 @@ def check_tool_parity() -> list[tuple[str, str, str]]:
     return findings
 
 
-# ---- Check 2: argument-hint ↔ body flag parity -------------------------------
+# ---- Check 2: argument-hint 鈫?body flag parity -------------------------------
 
 FLAG_RE = re.compile(r"--[a-z][a-z0-9-]*\b(?!=)")
 # Word boundary + negative lookahead for `=`: skill flags are boolean, not
@@ -191,9 +191,9 @@ FLAG_RE = re.compile(r"--[a-z][a-z0-9-]*\b(?!=)")
 
 
 def check_flag_parity() -> list[tuple[str, str, str]]:
-    """Bidirectional argument-hint ↔ body flag parity.
+    """Bidirectional argument-hint 鈫?body flag parity.
 
-    Forward (body → hint): count a flag as documented only when it appears
+    Forward (body 鈫?hint): count a flag as documented only when it appears
     in a clear option-documentation context:
       (a) first code-span in a markdown table row: `| `--flag` | ...`
       (b) explicit opt-out language: "`--flag` opts out", "skip with `--flag`"
@@ -201,8 +201,8 @@ def check_flag_parity() -> list[tuple[str, str, str]]:
           `1. `--flag``
     Prose mentions, shell-example flags, and other skills' flags are ignored.
 
-    Reverse (hint → body): a flag advertised in argument-hint must appear
-    somewhere in the body as a code-span (more permissive than forward —
+    Reverse (hint 鈫?body): a flag advertised in argument-hint must appear
+    somewhere in the body as a code-span (more permissive than forward 鈥?
     a flag listed in a reference table without option-verbs still counts).
     """
     findings: list[tuple[str, str, str]] = []
@@ -230,7 +230,7 @@ def check_flag_parity() -> list[tuple[str, str, str]]:
     # documentation context (option-keywords) would double-fail many legit
     # skills that list flags only in a reference table without option verbs.
     any_code_flag_re = re.compile(r"`(--[a-z][a-z0-9-]*)`")
-    for skill_md in sorted(REPO.glob(".claude/skills/*/SKILL.md")):
+    for skill_md in sorted(REPO.glob(".codex/skills/*/SKILL.md")):
         try:
             text = skill_md.read_text(encoding="utf-8")
         except (OSError, UnicodeError) as e:
@@ -270,7 +270,7 @@ def check_flag_parity() -> list[tuple[str, str, str]]:
                 f"but argument-hint is {hint!r}",
             ))
         # Reverse: flags in argument-hint that appear nowhere in the body.
-        # Uses a more permissive "any code-spanned flag" check — flag tables
+        # Uses a more permissive "any code-spanned flag" check 鈥?flag tables
         # without option verbs (e.g. `| --fast | description |`) still count
         # as documented. Prevents false positives where a legit documented
         # flag wasn't picked up by the stricter forward-direction detector.
@@ -281,7 +281,7 @@ def check_flag_parity() -> list[tuple[str, str, str]]:
                 "P2",
                 skill_md.relative_to(REPO).as_posix(),
                 f"argument-hint advertises {sorted(stale_in_hint)} but the "
-                f"body never mentions those flags — stale or unimplemented",
+                f"body never mentions those flags 鈥?stale or unimplemented",
             ))
     return findings
 
@@ -294,7 +294,7 @@ HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)(?:\s*\{#([^}]+)\})?\s*$", re.MULTILI
 
 
 def anchorize(title: str) -> str:
-    """GitHub-flavored-markdown anchor: lowercase, spaces→dashes, strip
+    """GitHub-flavored-markdown anchor: lowercase, spaces鈫抎ashes, strip
     most punctuation except dashes and underscores. Accented chars kept."""
     s = title.strip().lower()
     s = re.sub(r"[^\w\s-]", "", s)
@@ -335,12 +335,12 @@ def strip_code(text: str) -> str:
 def check_anchor_resolution() -> list[tuple[str, str, str]]:
     findings: list[tuple[str, str, str]] = []
     scan_roots = [
-        REPO / ".claude",
+        REPO / ".codex",
         REPO / "guide",
         REPO / "templates",
         REPO / "CHANGELOG.md",
         REPO / "README.md",
-        REPO / "CLAUDE.md",
+        REPO / "AGENTS.md",
         REPO / "MEMORY.md",
         REPO / "TROUBLESHOOTING.md",
     ]
@@ -392,30 +392,30 @@ def check_anchor_resolution() -> list[tuple[str, str, str]]:
     return findings
 
 
-# ---- Check 4: Rule paths ↔ skill implementation parity -----------------------
+# ---- Check 4: Rule paths 鈫?skill implementation parity -----------------------
 
 RULE_KEYWORDS: dict[str, list[str]] = {
     # Only entries for rules whose scope actually targets skill files live
     # here. A rule targeting `.tex`/`.qmd`/`.R` content files (e.g.
     # content-invariants.md, cross-artifact-review.md) is not checkable with
-    # this protocol — those rules apply to content authors, not skill
-    # authors — and a dead entry here misleads future maintainers.
+    # this protocol 鈥?those rules apply to content authors, not skill
+    # authors 鈥?and a dead entry here misleads future maintainers.
     "post-flight-verification.md": ["claim-verifier", "Post-Flight"],
     "summary-parity.md": [],  # empty = explicitly skipped; applies to edits
-    # Add more as new rules ship that include `.claude/skills/*/SKILL.md`
+    # Add more as new rules ship that include `.codex/skills/*/SKILL.md`
     # in their paths: or globs: frontmatter.
 }
 
 
 def check_rule_skill_parity() -> list[tuple[str, str, str]]:
     """For each rule with a non-empty keyword list, iterate its scope
-    frontmatter (either `paths:` or `globs:` — both are valid and some
+    frontmatter (either `paths:` or `globs:` 鈥?both are valid and some
     rules use `globs:`). For each scope pattern that targets skill files,
     verify the matching skills reference at least one of the rule's
     keywords. Dead entries (scope targets non-skill files) yield nothing.
     """
     findings: list[tuple[str, str, str]] = []
-    for rule_md in sorted(REPO.glob(".claude/rules/*.md")):
+    for rule_md in sorted(REPO.glob(".codex/rules/*.md")):
         rule_name = rule_md.name
         keywords = RULE_KEYWORDS.get(rule_name)
         if keywords is None or not keywords:
@@ -425,14 +425,14 @@ def check_rule_skill_parity() -> list[tuple[str, str, str]]:
         except (OSError, UnicodeError):
             continue
         fm, _ = parse_frontmatter(rule_text)
-        # Rules in this repo use either `paths:` or `globs:` — accept both.
+        # Rules in this repo use either `paths:` or `globs:` 鈥?accept both.
         scope = (fm.get("paths") or []) + (fm.get("globs") or [])
         if not isinstance(scope, list):
             continue
         for pattern in scope:
             if not isinstance(pattern, str):
                 continue
-            if ".claude/skills/" not in pattern:
+            if ".codex/skills/" not in pattern:
                 continue
             for skill_md in REPO.glob(pattern):
                 try:

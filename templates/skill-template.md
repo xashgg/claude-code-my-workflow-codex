@@ -1,4 +1,4 @@
-# Skill Creation Template
+﻿# Skill Creation Template
 
 **Use this template to create domain-specific skills for your academic workflow.**
 
@@ -7,10 +7,10 @@
 ## When to Create a Custom Skill
 
 Create a skill when you find yourself:
-- Repeatedly explaining the same 3+ step workflow to Claude
+- Repeatedly explaining the same 3+ step workflow to Codex
 - Needing domain-specific quality checks (citation style, notation consistency, lab protocols)
 - Enforcing field-specific output formats (thesis structure, journal templates, lab notebooks)
-- Coordinating multi-tool workflows (Figma → R → LaTeX, data → analysis → manuscript)
+- Coordinating multi-tool workflows (Figma 鈫?R 鈫?LaTeX, data 鈫?analysis 鈫?manuscript)
 
 **Don't create a skill for:**
 - One-time tasks
@@ -21,7 +21,7 @@ Create a skill when you find yourself:
 
 ## Template Structure
 
-Copy the structure below to `.claude/skills/[your-skill-name]/SKILL.md`:
+Copy the structure below to `.codex/skills/[your-skill-name]/SKILL.md`:
 
 ```markdown
 ---
@@ -87,59 +87,58 @@ Beyond the basic fields shown above, skills support additional YAML frontmatter 
 |-------|---------|---------|
 | `effort` | Override reasoning effort level | `high` (for review skills), `low` (for formatting) |
 | `context` | Set to `fork` to run in an isolated subagent context | Protects main conversation from verbose output |
-| `agent` | Link to an agent definition in `.claude/agents/` | `proofreader` |
-| `hooks` | Skill-specific hooks (same syntax as settings.json) | Custom pre/post actions |
+| `agent` | Link to an agent definition in `.codex/agents/` | `proofreader` |
 | `model` | Force a specific model | `haiku` (cheaper), `opus` (smarter) |
-| `disable-model-invocation` | Prevent Claude from auto-triggering | `true` (only invoked via `/skill-name`) |
+| `disable-model-invocation` | Prevent Codex from auto-triggering | `true` (only invoked via `/skill-name`) |
 
-**Dynamic content** — skills can include live data using string substitutions:
+**Dynamic content** 鈥?skills can include live data using string substitutions:
 
-- `$ARGUMENTS` — full argument string (e.g., `/skill-name Lecture01` → `Lecture01`)
-- `$0`, `$1` — positional arguments (0-based)
-- `${CLAUDE_SKILL_DIR}` — path to the skill's directory (for bundled supporting files)
-- `` `!git log --oneline -5` `` — dynamic command output injected when skill loads
+- `$ARGUMENTS` 鈥?full argument string (e.g., `/skill-name Lecture01` 鈫?`Lecture01`)
+- `$0`, `$1` 鈥?positional arguments (0-based)
+- `${Codex_SKILL_DIR}` 鈥?path to the skill's directory (for bundled supporting files)
+- `` `!git log --oneline -5` `` 鈥?dynamic command output injected when skill loads
 
-See the [guide's Skill Frontmatter Reference](https://psantanna.com/claude-code-my-workflow/workflow-guide.html#skill-frontmatter) for details and examples.
+See the [guide's Skill Frontmatter Reference](https://psantanna.com/codex-academic-workflow/workflow-guide.html#skill-frontmatter) for details and examples.
 
 ### When to set `disable-model-invocation: true` {#when-to-disable-model-invocation}
 
-Set this flag whenever the skill writes a **persistent, load-bearing file** that the user must explicitly intend to create. Otherwise, Claude may auto-trigger the skill in response to a vaguely-matching prompt and produce a file that's hard to undo without manual cleanup.
+Set this flag whenever the skill writes a **persistent, load-bearing file** that the user must explicitly intend to create. Otherwise, Codex may auto-trigger the skill in response to a vaguely-matching prompt and produce a file that's hard to undo without manual cleanup.
 
 **Set it for skills that:**
 
-- Create new persistent source files (`/create-lecture` → new `.tex`, `/new-diagram` → new TikZ source).
-- Write a self-modifying artifact (`/learn` → new SKILL.md, `/checkpoint` → state snapshot, `/preregister` → preregistration document).
-- Run a destructive cycle (`/deep-audit` → repo-wide fix loop).
+- Create new persistent source files (`/create-lecture` 鈫?new `.tex`, `/new-diagram` 鈫?new TikZ source).
+- Write a self-modifying artifact (`/learn` 鈫?new SKILL.md, `/checkpoint` 鈫?state snapshot, `/preregister` 鈫?preregistration document).
+- Run a destructive cycle (`/deep-audit` 鈫?repo-wide fix loop).
 
 **Don't set it for skills that:**
 
-- Produce transient analysis output (`/proofread`, `/review-r`, `/visual-audit` — write reports under `quality_reports/` that are easy to delete).
+- Produce transient analysis output (`/proofread`, `/review-r`, `/visual-audit` 鈥?write reports under `quality_reports/` that are easy to delete).
 - Are read-only diagnostics (`/permission-check`, `/context-status`).
 - Compile / render / deploy from existing source (`/compile-latex`, `/deploy`, `/extract-tikz`).
 
-The flag still allows direct invocation as `/skill-name` — it only blocks the model from auto-triggering on a heuristic match.
+The flag still allows direct invocation as `/skill-name` 鈥?it only blocks the model from auto-triggering on a heuristic match.
 
-### CLAUDE.md `@import` syntax (Anthropic Apr 2026)
+### AGENTS.md `@import` syntax (OpenAI Apr 2026)
 
-Anthropic's `CLAUDE.md` supports `@path/to/import` to pull in additional files. Example:
+OpenAI's `AGENTS.md` supports `@path/to/import` to pull in additional files. Example:
 
 ```markdown
 See @README.md for project overview and @package.json for available commands.
 
 # Personal overrides
-@~/.claude/my-project-instructions.md
+@~/.codex/my-project-instructions.md
 
 # Domain-specific instructions
 @docs/git-instructions.md
 ```
 
-**This template's `CLAUDE.md` deliberately does NOT use `@import`** — at 146 lines it's already lean, and importing fragments fractures the onboarding context (forkers expect "one file to load at session start"). Mention this here for forkers whose customization grows large enough to warrant splitting; for short CLAUDE.md files, splitting tends to hurt more than help.
+**This template's `AGENTS.md` deliberately does NOT use `@import`** 鈥?at 146 lines it's already lean, and importing fragments fractures the onboarding context (forkers expect "one file to load at session start"). Mention this here for forkers whose customization grows large enough to warrant splitting; for short AGENTS.md files, splitting tends to hurt more than help.
 
 ---
 
 ## Writing Effective Descriptions
 
-The `description` field determines when Claude loads your skill. Use this structure:
+The `description` field determines when Codex loads your skill. Use this structure:
 
 ```
 [What it does] + [When to use it] + [Key capabilities]
@@ -169,14 +168,14 @@ description: Reviews econometric specifications for common errors. Use when user
 
 ### Bad Examples (Too Generic)
 
-❌ `description: Helps with citations`
-→ Too vague, doesn't specify style or when to trigger
+鉂?`description: Helps with citations`
+鈫?Too vague, doesn't specify style or when to trigger
 
-❌ `description: Checks lab notebooks`
-→ Missing trigger phrases, no format specification
+鉂?`description: Checks lab notebooks`
+鈫?Missing trigger phrases, no format specification
 
-❌ `description: Reviews thesis chapters`
-→ Doesn't specify what aspects or when to activate
+鉂?`description: Reviews thesis chapters`
+鈫?Doesn't specify what aspects or when to activate
 
 ---
 
@@ -184,7 +183,7 @@ description: Reviews econometric specifications for common errors. Use when user
 
 ### Example 1: Citation Cross-Reference Checker
 
-**File:** `.claude/skills/validate-citations/SKILL.md`
+**File:** `.codex/skills/validate-citations/SKILL.md`
 
 ```markdown
 ---
@@ -240,7 +239,7 @@ Step 4: **Report findings**
 
 ### Example 2: Regression Output Formatter
 
-**File:** `.claude/skills/format-regression-tables/SKILL.md`
+**File:** `.codex/skills/format-regression-tables/SKILL.md`
 
 ```markdown
 ---
@@ -282,7 +281,7 @@ Step 4: **Save and verify**
 **Context:** User has run `felm(y ~ x | firm + year | 0 | firm, data=df)`
 **Actions:**
 1. Read saved model object
-2. Extract: coefficients, clustered SEs, R², N
+2. Extract: coefficients, clustered SEs, R虏, N
 3. Generate LaTeX:
    ```latex
    \begin{table}[htbp]
@@ -322,7 +321,7 @@ Step 4: **Save and verify**
 
 ### Example 3: Experimental Protocol Validator
 
-**File:** `.claude/skills/validate-protocol/SKILL.md`
+**File:** `.codex/skills/validate-protocol/SKILL.md`
 
 ```markdown
 ---
@@ -366,9 +365,9 @@ Step 4: **Generate report**
 **Context:** Protocol for isolating primary neurons
 **Actions:**
 1. Read protocol.md
-2. Check Materials: ✓ catalog numbers present
-3. Check Safety: ✗ missing biosafety level designation
-4. Check Procedure: ✓ quantitative (37°C, 5% CO₂, 10 mL media)
+2. Check Materials: 鉁?catalog numbers present
+3. Check Safety: 鉁?missing biosafety level designation
+4. Check Procedure: 鉁?quantitative (37掳C, 5% CO鈧? 10 mL media)
 **Result:** Report: "Missing: BSL-2 designation. Add before IRB submission."
 
 ## Troubleshooting
@@ -383,7 +382,7 @@ Step 4: **Generate report**
 ## Testing Your Skill
 
 ### Step 1: Manual Test
-1. Create skill directory: `mkdir -p .claude/skills/your-skill-name`
+1. Create skill directory: `mkdir -p .codex/skills/your-skill-name`
 2. Copy SKILL.md template and customize
 3. Skills hot-reload automatically --- changes are detected without restarting
 4. Trigger skill: Use one of your trigger phrases
@@ -395,10 +394,10 @@ Step 4: **Generate report**
 - **If output wrong:** Add validation steps, troubleshooting section
 
 ### Step 3: Success Criteria
-- ✅ Skill triggers on 90%+ of relevant queries
-- ✅ Complete workflow in expected number of steps
-- ✅ Zero API errors during normal operation
-- ✅ Same task yields consistent outputs across sessions
+- 鉁?Skill triggers on 90%+ of relevant queries
+- 鉁?Complete workflow in expected number of steps
+- 鉁?Zero API errors during normal operation
+- 鉁?Same task yields consistent outputs across sessions
 
 ---
 
@@ -435,6 +434,6 @@ When adapting this template to your domain:
 
 - **File:** `templates/skill-template.md`
 - **Purpose:** Starter for domain-specific skills
-- **Usage:** Copy to `.claude/skills/[name]/SKILL.md`, customize for your field
+- **Usage:** Copy to `.codex/skills/[name]/SKILL.md`, customize for your field
 
-For existing skills examples, see `.claude/skills/` directory (30 skills for LaTeX, R, Quarto, and research workflows).
+For existing skills examples, see `.codex/skills/` directory (30 skills for LaTeX, R, Quarto, and research workflows).

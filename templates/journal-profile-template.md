@@ -1,6 +1,6 @@
-# Journal Profile Template
+﻿# Journal Profile Template
 
-Copy this block into `.claude/references/journal-profiles.md` (under the appropriate regional/field section) and fill in every field. Weights for the 6 dispositions must sum to 1.0.
+Copy this block into `.codex/references/journal-profiles.md` (under the appropriate regional/field section) and fill in every field. Weights for the 6 dispositions must sum to 1.0.
 
 ```markdown
 ### Journal Full Name (SHORT)
@@ -12,15 +12,15 @@ Copy this block into `.claude/references/journal-profiles.md` (under the appropr
 **Bar.** [1-2 sentences: what it takes to clear the desk. Mention acceptance rate if known.]
 
 **Domain-referee adjustments.**
-- Contribution 30 → [new] ([reason])
-- Lit positioning 25 → [new] ([reason])
-- Substance 20 → [new] ([reason])
-- External validity 15 → [new] ([reason])
-- Fit 10 → [new] ([reason])
+- Contribution 30 鈫?[new] ([reason])
+- Lit positioning 25 鈫?[new] ([reason])
+- Substance 20 鈫?[new] ([reason])
+- External validity 15 鈫?[new] ([reason])
+- Fit 10 鈫?[new] ([reason])
 
 **Methods-referee adjustments.**
-- [Dimension] [default] → [new] ([reason, e.g., "identification bar is higher at this journal"])
-- [Paper-type-specific: e.g., "If paper type is `structural`: Parameter ID 30 → 35"]
+- [Dimension] [default] 鈫?[new] ([reason, e.g., "identification bar is higher at this journal"])
+- [Paper-type-specific: e.g., "If paper type is `structural`: Parameter ID 30 鈫?35"]
 
 **Typical concerns.** (3-5 direct-quote questions this journal's referees ask)
 - "[Quote]"
@@ -53,18 +53,18 @@ The 6 dispositions used across the `--peer` pipeline:
 | THEORY | "What does the theory predict?" |
 | SKEPTIC | "What would make this go away?" |
 
-These dispositions are deliberately field-general. For a non-econ field, they should still apply — adjust the weights, not the labels.
+These dispositions are deliberately field-general. For a non-econ field, they should still apply 鈥?adjust the weights, not the labels.
 
 ## Field-specific paper types
 
 The `methods-referee` agent branches on paper type. The default types (econ-centric) are:
 
-- `reduced-form` — DiD, IV, RD, event study, etc.
-- `structural` — structural estimation, DSGE, GE calibration, etc.
-- `theory+empirics` — theoretical model with empirical test of its predictions.
-- `descriptive` — measurement, data construction, pattern documentation.
+- `reduced-form` 鈥?DiD, IV, RD, event study, etc.
+- `structural` 鈥?structural estimation, DSGE, GE calibration, etc.
+- `theory+empirics` 鈥?theoretical model with empirical test of its predictions.
+- `descriptive` 鈥?measurement, data construction, pattern documentation.
 
-For non-econ fields, add your own types to `.claude/agents/methods-referee.md` by duplicating the rubric block and editing the dimension weights. Examples:
+For non-econ fields, add your own types to `.codex/agents/methods-referee.md` by duplicating the rubric block and editing the dimension weights. Examples:
 
 - **Biology:** `observational / experimental / computational / review`.
 - **Political science:** `case-study / comparative / formal-model / survey`.
@@ -72,6 +72,6 @@ For non-econ fields, add your own types to `.claude/agents/methods-referee.md` b
 
 ## Cross-references
 
-- `.claude/references/journal-profiles.md` — the live calibration file.
-- `.claude/agents/editor.md` — reads profiles, draws referee dispositions.
-- `.claude/skills/review-paper/SKILL.md` — entry point for `--peer [SHORT]`.
+- `.codex/references/journal-profiles.md` 鈥?the live calibration file.
+- `.codex/agents/editor.md` 鈥?reads profiles, draws referee dispositions.
+- `.codex/skills/review-paper/SKILL.md` 鈥?entry point for `--peer [SHORT]`.
