@@ -33,6 +33,7 @@ Suggested first prompt:
 - `/compile-latex HelloWorld`: compile the sample Beamer deck.
 - `/deploy HelloWorld`: render the sample Quarto deck into `docs/`.
 - `/review-paper path/to/paper.tex`: review a manuscript.
+- `./scripts/convert-review-pdf.sh quality_reports/report.md`: convert a Markdown review report to PDF.
 - `/data-analysis`: run an R analysis workflow.
 - `/audit-reproducibility`: compare manuscript claims against analysis outputs.
 - `/checkpoint topic`: save a handoff snapshot in `quality_reports/checkpoints/`.
@@ -44,6 +45,7 @@ Suggested first prompt:
 | Codex CLI | AI-assisted workflow execution |
 | git | Version control |
 | Python 3 | Internal checker scripts |
+| Pandoc | Markdown review report PDF export |
 | XeLaTeX | Beamer compilation |
 | Quarto | HTML slides and docs |
 | R | Analysis templates |
