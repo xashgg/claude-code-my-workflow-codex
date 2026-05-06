@@ -24,6 +24,48 @@ DEFAULT_CJK_FONTS = [
 ]
 
 
+def convert_markdown_to_pdf(
+    input_path: Path,
+    output_path: Path | None = None,
+    *,
+    font: str | None = None,
+    margin: str = "1in",
+) -> Path:
+    """Convert a Markdown review report to PDF using Pandoc and XeLaTeX."""
+    input_path = Path(input_path)
+    output_path = Path(output_path) if output_path else input_path.with_suffix(".pdf")
+
+    if not input_path.exists():
+        raise FileNotFoundError(f"input file not found: {input_path}")
+    if input_path.suffix.lower() != ".md":
+        raise ValueError(f"expected a .md input file, got: {input_path}")
+
+    require_tool("pandoc")
+    require_tool("xelatex")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    chosen_font = choose_font(font)
+    command = [
+        "pandoc",
+        str(input_path),
+        "-o",
+        str(output_path),
+        "--pdf-engine=xelatex",
+        "-V",
+        f"CJKmainfont={chosen_font}",
+        "-V",
+        f"geometry:margin={margin}",
+        "-V",
+        "colorlinks=true",
+    ]
+
+    print(f"Converting {input_path} -> {output_path}")
+    print(f"Using CJK font: {chosen_font}")
+    subprocess.run(command, check=True)
+    print(f"PDF written: {output_path}")
+    return output_path
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Convert a Markdown review report to PDF using pandoc and xelatex."
@@ -78,39 +120,16 @@ def choose_font(requested: str | None) -> str:
 
 def main() -> int:
     args = parse_args()
-    input_path = args.input
-    output_path = args.output or input_path.with_suffix(".pdf")
-
-    if not input_path.exists():
-        print(f"Error: input file not found: {input_path}", file=sys.stderr)
+    try:
+        convert_markdown_to_pdf(
+            args.input,
+            args.output,
+            font=args.font,
+            margin=args.margin,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        print(f"Error: {exc}", file=sys.stderr)
         return 1
-    if input_path.suffix.lower() != ".md":
-        print(f"Error: expected a .md input file, got: {input_path}", file=sys.stderr)
-        return 1
-
-    require_tool("pandoc")
-    require_tool("xelatex")
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    font = choose_font(args.font)
-    command = [
-        "pandoc",
-        str(input_path),
-        "-o",
-        str(output_path),
-        "--pdf-engine=xelatex",
-        "-V",
-        f"CJKmainfont={font}",
-        "-V",
-        f"geometry:margin={args.margin}",
-        "-V",
-        "colorlinks=true",
-    ]
-
-    print(f"Converting {input_path} -> {output_path}")
-    print(f"Using CJK font: {font}")
-    subprocess.run(command, check=True)
-    print(f"PDF written: {output_path}")
     return 0
 
 
