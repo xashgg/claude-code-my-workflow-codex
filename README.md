@@ -34,6 +34,7 @@ Suggested first prompt:
 - `/deploy HelloWorld`: render the sample Quarto deck into `docs/`.
 - `/review-paper path/to/paper.tex`: review a manuscript.
 - `./scripts/convert-review-pdf.sh quality_reports/report.md`: convert a Markdown review report to PDF.
+- `./scripts/convert-review-pdf.ps1 quality_reports/report.md`: convert a Markdown review report to PDF on Windows PowerShell.
 - `/data-analysis`: run an R analysis workflow.
 - `/audit-reproducibility`: compare manuscript claims against analysis outputs.
 - `/checkpoint topic`: save a handoff snapshot in `quality_reports/checkpoints/`.
