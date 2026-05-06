@@ -32,6 +32,7 @@
 ./scripts/check-palette-sync.sh
 ./scripts/check-surface-sync.sh
 ./scripts/convert-review-pdf.sh quality_reports/report.md
+./scripts/convert-review-pdf.ps1 quality_reports/report.md
 python scripts/quality_score.py Quarto/file.qmd
 ./scripts/sync_to_docs.sh LectureN
 ```
