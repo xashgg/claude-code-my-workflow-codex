@@ -30,8 +30,8 @@ Suggested first prompt:
 
 ## Common Workflows
 
-- `/compile-latex HelloWorld`: compile the sample Beamer deck.
-- `/deploy HelloWorld`: render the sample Quarto deck into `docs/`.
+- Slide workflow: `/create-lecture Topic` -> `Slides/Lecture.tex` -> `/compile-latex Lecture` -> `Slides/Lecture.pdf` -> `/translate-to-quarto Lecture.tex` -> `Quarto/Lecture.qmd` -> `/deploy Lecture` -> `docs/slides/`.
+- Beamer `.tex` files are the source of truth; Quarto `.qmd` files are RevealJS mirrors for web deployment.
 - `/review-paper path/to/paper.tex`: review a manuscript.
 - `./scripts/convert-review-pdf.sh quality_reports/report.md`: convert a Markdown review report to PDF.
 - `./scripts/convert-review-pdf.ps1 quality_reports/report.md`: convert a Markdown review report to PDF on Windows PowerShell.
