@@ -226,7 +226,7 @@ As this repository evolves, meta-governance may need updates.
 | Skills (generic) | ✅ Yes | .codex/skills/ | ✅ Yes |
 | Rules (path-scoped, generic) | ✅ Yes | .codex/rules/ | ✅ Yes |
 | Agents (generic) | ✅ Yes | .codex/agents/ | ✅ Yes |
-| | Session logs | ✅ Yes | quality_reports/session_logs/ | ✅ Yes |
+| Session logs | ✅ Yes | quality_reports/session_logs/ | ✅ Yes |
 | Plans | ✅ Yes | quality_reports/plans/ | ✅ Yes |
 | Local settings | ❌ No | AGENTS.local.md | ❌ No (gitignored) |
 | Session state | ❌ No | .codex/state/ | ❌ No (gitignored) |
