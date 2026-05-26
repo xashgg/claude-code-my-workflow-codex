@@ -68,10 +68,6 @@ Suggested first prompt:
 4. Keep `Preambles/header.tex` and `Quarto/theme-template.scss` color palettes synchronized.
 5. Add field-specific standards to `.codex/rules/r-code-conventions.md` and related rules.
 
-## Origin
-
-This workflow was originally developed for Claude Code and has been converted to a Codex-native layout. The reusable academic patterns came from Pedro Sant'Anna's Econ 730: Causal Panel Data workflow at Emory University; the current repository removes Claude Code runtime configuration and keeps the academic agents, skills, rules, and templates in Codex-oriented form.
-
 ## License
 
 MIT License. See [LICENSE](LICENSE).
